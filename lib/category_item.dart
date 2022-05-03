@@ -1,5 +1,6 @@
-import 'package:deli_meals/category_meals_screen.dart';
 import 'package:flutter/material.dart';
+
+import './category_meals_screen.dart';
 
 class CategoryItem extends StatelessWidget {
   final String id;
@@ -13,8 +14,15 @@ class CategoryItem extends StatelessWidget {
   });
 
   void selectCategory(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => CategoryMealsScreen(id, title)),
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(builder: (_) => CategoryMealsScreen(id, title)),
+    // );
+
+    // named routes
+    // easy to maintain for bigger apps
+    Navigator.of(context).pushNamed(
+      CategoryMealsScreen.routeName,
+      arguments: {'id': id, 'title': title},
     );
   }
 
