@@ -11,6 +11,19 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  final List<Map<String, Object>> _pages = [
+    {'page': CategoriesScreen(), 'title': 'Categories'},
+    {'page': FavoritesScreen(), 'title': 'Your Favorites'},
+  ];
+
+  int _selectedPageIndex = 0;
+
+  void _selectPage(index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -18,25 +31,30 @@ class _TabsScreenState extends State<TabsScreen> {
       // initialIndex: 0, // is the default configure if different index is needed
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Meals'),
-          bottom: const TabBar(
-              tabs: [
-              Tab(
-                icon: Icon(Icons.category),
-                text: 'Categories',
-              ),
-              Tab(
-                icon: Icon(Icons.favorite),
-                text: 'Categories',
-              ),
-          ],
-        )
+          title: Text(_pages[_selectedPageIndex]['title']),
         ),
-        body: TabBarView(children: [
-          CategoriesScreen(),
-          FavoritesScreen(),
-        ],),
-      ),
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          // backgroundColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.white,
+          selectedItemColor: Theme.of(context).accentColor,
+          currentIndex: _selectedPageIndex,
+          type: BottomNavigationBarType.shifting, // if shifting the backgroundColor must be set in eah tab item, otherwise on the bar itself
+          items: [
+            BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColor,
+              icon: const Icon(Icons.category),
+              label: 'Categories',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColor,
+              icon: const Icon(Icons.favorite),
+              label: 'Favorites',
+            ),
+          ],
+          onTap: _selectPage,
+        ),
+        body: _pages[_selectedPageIndex]['page'],
+        ),
+      );
   }
 }
