@@ -13,6 +13,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
+    // DefaultTabController creates tabs on top for Android and on bottom for iOS
     return DefaultTabController(
       length: 2,
       // initialIndex: 0, // is the default configure if different index is needed
