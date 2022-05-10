@@ -18,19 +18,20 @@ class MealDetailScreen extends StatelessWidget {
 
   Widget buildContainer(Widget child) {
     return Container(
-      width: 300, // better use MediaQuery
-      height: 200, // better use MediaQuery
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.grey,
+        width: 300,
+        // better use MediaQuery
+        height: 200,
+        // better use MediaQuery
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: child
-    );
+        child: child);
   }
 
   const MealDetailScreen();
@@ -60,13 +61,15 @@ class MealDetailScreen extends StatelessWidget {
               ),
             ),
             buildSectionTitle(context, 'Ingredients'),
-            buildContainer(ListView.builder(
+            buildContainer(
+              ListView.builder(
                 itemCount: selectedMeal.ingredients.length,
                 itemBuilder: (ctx, index) {
                   return Card(
                     color: Theme.of(context).accentColor,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
                       child: Text(selectedMeal.ingredients[index]),
                     ),
                   );
@@ -74,19 +77,28 @@ class MealDetailScreen extends StatelessWidget {
               ),
             ),
             buildSectionTitle(context, 'Steps'),
-            buildContainer(ListView.builder(itemCount: selectedMeal.steps.length, itemBuilder: (ctx, index) {
-              return Column(
-                children: [
-                  ListTile(
-                    leading: CircleAvatar(child: Text('${index + 1}.'),),
-                    title: Text(selectedMeal.steps[index]),
-                  ),
-                  const Divider(),
-                ],
-              );
-            },))
+            buildContainer(ListView.builder(
+              itemCount: selectedMeal.steps.length,
+              itemBuilder: (ctx, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text('${index + 1}.'),
+                      ),
+                      title: Text(selectedMeal.steps[index]),
+                    ),
+                    const Divider(),
+                  ],
+                );
+              },
+            ))
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.delete),
+        onPressed: () => Navigator.of(context).pop(mealId),
       ),
     );
   }

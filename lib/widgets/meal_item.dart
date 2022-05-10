@@ -6,15 +6,15 @@ import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
   final String mealId;
+  final Function removeItem;
   Meal _meal;
 
-  MealItem(this.mealId) {
+  MealItem(this.mealId, this.removeItem) {
     _meal = DUMMY_MEALS.where((meal) => meal.id == mealId).first;
   }
 
   String get complexityText {
     switch (_meal.complexity) {
-
       case Complexity.Simple:
         return 'Simple';
         break;
@@ -31,8 +31,7 @@ class MealItem extends StatelessWidget {
   }
 
   String get affordabilityText {
-    switch  (_meal.affordability) {
-
+    switch (_meal.affordability) {
       case Affordability.Affordable:
         return 'Affordable';
         break;
@@ -48,7 +47,16 @@ class MealItem extends StatelessWidget {
   }
 
   void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(MealDetailScreen.routeName, arguments: {'id': _meal.id});
+    Navigator.of(context).pushNamed(
+      MealDetailScreen.routeName,
+      arguments: {'id': _meal.id},
+    ).then((result) {
+      if (result == null) {
+        return;
+      }
+      print(result);
+      removeItem(result);
+    } );
   }
 
   @override
@@ -108,21 +116,27 @@ class MealItem extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(Icons.schedule),
-                      const SizedBox(width: 6,),
+                      const SizedBox(
+                        width: 6,
+                      ),
                       Text('${_meal.duration} min'),
                     ],
                   ),
                   Row(
                     children: [
                       const Icon(Icons.work),
-                      const SizedBox(width: 6,),
+                      const SizedBox(
+                        width: 6,
+                      ),
                       Text(complexityText),
                     ],
                   ),
                   Row(
                     children: [
                       const Icon(Icons.money),
-                      const SizedBox(width: 6,),
+                      const SizedBox(
+                        width: 6,
+                      ),
                       Text(affordabilityText),
                     ],
                   ),
