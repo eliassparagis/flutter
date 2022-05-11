@@ -5,11 +5,11 @@ import '../screens/meal_detail_screen.dart';
 import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  final String mealId;
+  @required final String mealId;
   final Function removeItem;
   Meal _meal;
 
-  MealItem(this.mealId, this.removeItem) {
+  MealItem({this.mealId, this.removeItem}) {
     _meal = DUMMY_MEALS.where((meal) => meal.id == mealId).first;
   }
 
